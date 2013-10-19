@@ -6,9 +6,13 @@ import com.watch.orientationsensor.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -18,6 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -82,18 +87,18 @@ public class FullscreenDisplayActivity extends Activity {
 			String s = new String(String.format("X: %.1f\nY: %.1f\nZ: %.1f", event.values[0], event.values[1], event.values[2]));
 //					"X: "+event.values[0]+"; Y: "+event.values[1]+"; Z: "+event.values[2]+";";
 			((TextView)findViewById(R.id.xyz)).setText(s);
-			if(handDown && event.values[2] > ZVALUE){
-				PowerManager powermanager = ((PowerManager)getSystemService(Context.POWER_SERVICE));
-			    WakeLock wakeLock = powermanager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "tag");
-			    wakeLock.acquire();
-				Window window = getWindow();
-				window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-				window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-				window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-				handDown = false;
-			}else if(!handDown && event.values[2] < ZVALUE){
-				handDown = true;
-			}
+            if(handDown && event.values[2] > ZVALUE){
+                PowerManager powermanager = ((PowerManager)getSystemService(Context.POWER_SERVICE));
+            WakeLock wakeLock = powermanager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "tag");
+            wakeLock.acquire();
+                Window window = getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+                window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+                window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+                handDown = false;
+            }else if(!handDown && event.values[2] < ZVALUE){
+                handDown = true;
+            }
 			Log.i("SensorData", String.format("X: %.1f\nY: %.1f\nZ: %.1f", event.values[0], event.values[1], event.values[2]));
 		}
 	}
@@ -174,6 +179,18 @@ public class FullscreenDisplayActivity extends Activity {
 		// while interacting with the UI.
 		findViewById(R.id.dummy_button).setOnTouchListener(
 				mDelayHideTouchListener);
+		
+		Intent intentNotify = new Intent();
+		PendingIntent intentContent = PendingIntent.getActivity(this, 0, intentNotify, 0);
+		
+		Notification notification = new Notification.Builder(getBaseContext())
+        	.setContentTitle("Orientation Sensor is Running. ")
+        	.setContentText("It works, and please keep our secret. ")
+        	.setSmallIcon(R.drawable.ic_launcher)
+        	.setOngoing(true)
+        	.build();
+		
+		((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).notify(1, notification);
 	}
 
 	@Override
