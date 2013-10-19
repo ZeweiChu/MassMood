@@ -58,6 +58,13 @@
             android:text="@string/xyz"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="cancel_notification"
+            android:text="Button" />
+
     </FrameLayout>
 
 </FrameLayout>

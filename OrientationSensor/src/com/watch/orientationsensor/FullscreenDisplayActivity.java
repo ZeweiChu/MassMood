@@ -202,6 +202,10 @@ public class FullscreenDisplayActivity extends Activity {
 		// are available.
 		delayedHide(100);
 	}
+	
+	public void cancel_notification(View e) {
+		((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancel(1);
+	}
 
 	/**
 	 * Touch listener to use for in-layout UI controls to delay hiding the
@@ -244,7 +248,12 @@ public class FullscreenDisplayActivity extends Activity {
 	}
 	
 	protected void onDestroy(){
+		cancel_notification(null);
 		sensorManager.unregisterListener(mySensorListener);
 		super.onDestroy();
+	}
+	
+	protected void onStop() {
+		super.onStop();
 	}
 }
