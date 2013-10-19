@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bgbj" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:src="@drawable/title" />
+
+    <Button
+        android:id="@+id/btn1"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn4"
+        android:layout_centerHorizontal="true"
+        android:text="Hard" />
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn1"
+        android:layout_below="@+id/btn1"
+        android:text="About" />
+
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn2"
+        android:layout_below="@+id/btn2"
+        android:text="Exit" />
+
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn1"
+        android:layout_centerVertical="true"
+        android:text="Easy" />
+
+</RelativeLayout>
